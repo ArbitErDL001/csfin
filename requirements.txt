@@ -1,0 +1,12 @@
+blinker
+click
+colorama
+Flask
+Flask-MySQLdb
+importlib-metadata
+itsdangerous
+Jinja2
+MarkupSafe
+mysqlclient
+Werkzeug
+zipp
