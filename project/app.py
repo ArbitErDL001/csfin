@@ -50,3 +50,12 @@ def update_song(id):
     cur.execute("UPDATE songs SET title=%s WHERE id=%s", (data['title'], id))
     mysql.connection.commit()
     return jsonify({'message': 'Updated'})
+
+#Delete(DELETE)
+@app.route('/songs/<int:id>', methods=['DELETE'])
+@jwt_required()
+def delete_song(id):
+    cur = mysql.connection.cursor()
+    cur.execute("DELETE FROM songs WHERE id=%s", (id,))
+    mysql.connection.commit()
+    return jsonify({'message': 'Deleted'})
