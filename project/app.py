@@ -65,3 +65,12 @@ def delete_song(id):
 def login():
     token = create_access_token(identity='admin')
     return jsonify(access_token=token)
+
+#Search songs by title
+@app.route('/songs/search')
+def search():
+    artist = request.args.get('artist')
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM songs WHERE artist LIKE %s", ('%' + artist + '%',))
+    rows = cur.fetchall()
+    return jsonify(rows)
