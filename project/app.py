@@ -40,3 +40,13 @@ def get_songs():
     if format == 'xml':
         return make_response(dicttoxml(result), 200, {'Content-Type': 'application/xml'})
     return jsonify(result)
+
+#Update(PUT)
+@app.route('/songs/<int:id>', methods=['PUT'])
+@jwt_required()
+def update_song(id):
+    data = request.json
+    cur = mysql.connection.cursor()
+    cur.execute("UPDATE songs SET title=%s WHERE id=%s", (data['title'], id))
+    mysql.connection.commit()
+    return jsonify({'message': 'Updated'})
