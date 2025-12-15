@@ -59,3 +59,9 @@ def delete_song(id):
     cur.execute("DELETE FROM songs WHERE id=%s", (id,))
     mysql.connection.commit()
     return jsonify({'message': 'Deleted'})
+
+#User login to get JWT token
+@app.route('/login', methods=['POST'])
+def login():
+    token = create_access_token(identity='admin')
+    return jsonify(access_token=token)
