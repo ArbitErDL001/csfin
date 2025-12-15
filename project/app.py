@@ -26,3 +26,17 @@ def create_song():
     )
     mysql.connection.commit()
     return jsonify({'message': 'Song added'}), 201
+
+#Read(GET)
+@app.route('/songs', methods=['GET'])
+def get_songs():
+    format = request.args.get('format', 'json')
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM songs")
+    rows = cur.fetchall()
+
+    result = [{'id': r[0], 'title': r[1], 'artist': r[2], 'genre': r[3], 'year': r[4]} for r in rows]
+
+    if format == 'xml':
+        return make_response(dicttoxml(result), 200, {'Content-Type': 'application/xml'})
+    return jsonify(result)
